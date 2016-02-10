@@ -110,8 +110,46 @@ describe('Hydrate with ES data', function() {
           model._esResult._type.should.eql('esresulttext');
           model._esResult.should.have.property('_id');
           model._esResult.should.have.property('_score');
-          model._esResult.should.have.property('_source');
           model._esResult.should.have.property('highlight');
+
+          model._esResult.should.not.have.property('_source');
+        });
+
+        done();
+      });
+    });
+
+    it('should remove _source object', function (done) {
+
+      esResultText.search({
+        match_phrase: {
+          quote: 'Death'
+        }
+      }, {
+        hydrate: true,
+        hydrateWithESResults: {source: true},
+        highlight: {
+          fields: {
+            quote: {}
+          }
+        }
+      }, function(err, res) {
+
+        res.hits.total.should.eql(3);
+        res.hits.hits.forEach(function(model) {
+            console.log('mod', model._esResult);
+          model.should.have.property('_esResult');
+          model._esResult.should.have.property('_index');
+          model._esResult._index.should.eql('esresulttexts');
+          model._esResult.should.have.property('_type');
+          model._esResult._type.should.eql('esresulttext');
+          model._esResult.should.have.property('_id');
+          model._esResult.should.have.property('_score');
+          model._esResult.should.have.property('highlight');
+
+          model._esResult.should.have.property('_source');
+          model._esResult._source.should.have.property('title');
+          model._esResult._source.should.have.property('title');
         });
 
         done();

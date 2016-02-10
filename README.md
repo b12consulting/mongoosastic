@@ -621,11 +621,19 @@ User.search(
   function(err, results) {
     // results here
     results.hits.hits.forEach(function(result) {
-      console.log('score', result._id, result._esResult.score);
+      console.log(
+        'score',
+        result._id,
+        result._esResult.score
+      );
     });
 });
 
 ```
+
+By default the `_esResult._source` document is skipped. It can be added with the option `hydrateWithESResults: {source: false}`.
+
+
 
 Note using hydrate will be a degree slower as it will perform an Elasticsearch
 query and then do a query against mongodb for all the ids returned from
