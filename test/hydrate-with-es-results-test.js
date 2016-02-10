@@ -103,6 +103,7 @@ describe('Hydrate with ES data', function() {
 
         res.hits.total.should.eql(3);
         res.hits.hits.forEach(function(model) {
+            
           model.should.have.property('_esResult');
           model._esResult.should.have.property('_index');
           model._esResult._index.should.eql('esresulttexts');
@@ -137,7 +138,7 @@ describe('Hydrate with ES data', function() {
 
         res.hits.total.should.eql(3);
         res.hits.hits.forEach(function(model) {
-            console.log('mod', model._esResult);
+
           model.should.have.property('_esResult');
           model._esResult.should.have.property('_index');
           model._esResult._index.should.eql('esresulttexts');
