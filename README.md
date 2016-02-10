@@ -580,8 +580,11 @@ provide {hydrate:true} as the second argument to a search call.
 
 ```javascript
 
-User.search({query_string: {query: "john"}}, {hydrate:true}, function(err, results) {
-  // results here
+User.search(
+  {query_string: {query: 'john'}},
+  {hydrate: true},
+  function(err, results) {
+    // results here
 });
 
 ```
@@ -591,8 +594,35 @@ how to query for the mongoose object.
 
 ```javascript
 
-User.search({query_string: {query: "john"}}, {hydrate:true, hydrateOptions: {select: 'name age'}}, function(err, results) {
-  // results here
+User.search(
+  {query_string: {query: 'john'}},
+  {
+    hydrate: true,
+    hydrateOptions: {select: 'name age'}
+  },
+  function(err, results) {
+    // results here
+});
+
+```
+
+Original ElasticSearch result data can be kept with `hydrateWithESResults` option. Documents are then enhanced with a
+`_esResult` property
+
+```javascript
+
+User.search(
+  {query_string: {query: 'john'}},
+  {
+    hydrate: true,
+    hydrateWithESResults: true,
+    hydrateOptions: {select: 'name age'}
+  },
+  function(err, results) {
+    // results here
+    results.hits.hits.forEach(function(result) {
+      console.log('score', result._id, result._esResult.score);
+    });
 });
 
 ```
