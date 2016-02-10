@@ -624,7 +624,7 @@ User.search(
       console.log(
         'score',
         result._id,
-        result._esResult.score
+        result._esResult._score
       );
     });
 });
