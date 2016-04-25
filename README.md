@@ -304,7 +304,6 @@ Options are:
  * `saveOnSynchronize` - triggers Mongoose save (and pre-save) method when synchronizing a collection/index. Defaults to global `saveOnSynchronize` option
 
 
-
 ### Bulk Indexing
 
 You can also specify `bulk` options with mongoose which will utilize Elasticsearch's bulk indexing api. This will cause the `synchronize` function to use bulk indexing as well.
